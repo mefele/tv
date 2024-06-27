@@ -1,8 +1,3 @@
-KEY:412AYiM6-GO2t85a6-HJ07S53h
-o40j37HT-14e5DQ6J-d1D68Q3Z
-0314DfUI-0ZK59r8Q-7m14sCv8
-
-
 大佬们搭建好的订阅器
 天城大佬：https://trojan.gitgoogle.com/sub?host=[你的Worker域名]&pw=[你的password]
 
