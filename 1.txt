@@ -1,0 +1,119 @@
+KEY:412AYiM6-GO2t85a6-HJ07S53h
+o40j37HT-14e5DQ6J-d1D68Q3Z
+0314DfUI-0ZK59r8Q-7m14sCv8
+
+
+大佬们搭建好的订阅器
+天城大佬：https://trojan.gitgoogle.com/sub?host=[你的Worker域名]&pw=[你的password]
+
+3k.fxxk.dedyn.io 3K大佬
+
+vmess.fxxk.dedyn.io CM大佬
+订阅器使用格式：https://生成器地址/sub?host=伪装域名&uuid=你的UUID&path=路径
+
+https://3k.fxxk.dedyn.io/sub?host=vm.jellyjenna248.workers.dev&uuid=6be84efe-8af3-4941-9614-57d941ea65a4&path=/?ed=2560
+
+
+https://cm.godns.onflashdrive.app/sub?host=vm.jellyjenna248.workers.dev&uuid=6be84efe-8af3-4941-9614-57d941ea65a4&path=/?ed=2560
+https://3k.fxxk.dedyn.io/sub?host=vm.jellyjenna248.workers.dev&uuid=6be84efe-8af3-4941-9614-57d941ea65a4&path=/?ed=2560
+https://vmess.fxxk.dedyn.io/sub?host=vm.jellyjenna248.workers.dev&uuid=6be84efe-8af3-4941-9614-57d941ea65a4&path=/?ed=2560
+https://trojan.gitgoogle.com/sub?host=tp-4jj.pages.dev&pw=trojan&path=/?ed=2560
+https://alvless.filegear-sg.me/sub?host=vm.jellyjenna248.workers.dev&uuid=6be84efe-8af3-4941-9614-57d941ea65a4&path=/?ed=2560
+https://alvless.filegear-sg.me/sub?host=tp-4jj.pages.dev&pw=trojan&path=/?ed=2560
+
+
+[Interface]
+PrivateKey = sFWe4qKv1MKqO8LXMRfp3+1FVRVUPA691yml4vv4QVo=
+Address = 172.16.0.2/32, 2606:4700:110:89b6:ffb4:a367:682e:67e9/128
+DNS = 1.1.1.1, 1.0.0.1, 2606:4700:4700::1111, 2606:4700:4700::1001
+MTU = 1280
+[Peer]
+PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+AllowedIPs = 0.0.0.0/0
+AllowedIPs = ::/0
+Endpoint = engage.cloudflareclient.com:2408
+
+
+warp_parameters:
+  - private_key: sFWe4qKv1MKqO8LXMRfp3+1FVRVUPA691yml4vv4QVo=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: 
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: kAFzLh6ycIlvJN1ODOv/XNZj9joJqffhr9Bx8EPEr0I=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: 
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: 6P868uza2HswOdBsSxMNhSsT5KqRUktjnPq/T2uQfVI=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: 
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: 0OFvYaxyq4Z3QDXvklhnqVNWGxvQ1KllOlSvXyhV9nw=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: 2BVn
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: 0OYwpNrniwDRhygZlNvEiqSpHX6kGZ6aEPq0FMEP1WU=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: oFLu
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: mG6ZG1WCdyO7mE2dFZqV5+g9hMnIt8X0OviBlR2W9Hs=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: 2iac
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: gIbQAgUKvJ69xdFX7OFDe+pzEOLAxf45nNhPNJ8W9FY=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: pf0B
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: MHE7MVJDuoD2HT3EKm8F0ytyf+P5V1btIhnnbo62H2I=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: /mHW
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+- private_key: 8GNdKcAyopQjleYPEPFdZW3geWLPITP/Ko0VsRCPN1A=
+    public_key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    reserved: xjAd
+    v4: 172.16.0.2
+    v6: 2606:4700:110:89b6:ffb4:a367:682e:67e9
+
+
+
+bag fashion raincoat tights 
+bathing suit glasses ring trainers 
+belt glove scarf trousers 
+blouse handbag shirt try on (v)
+boot hat shoes T-shirt 
+bracelet jacket shorts umbrella 
+cap jeans skirt uniform 
+chain jewellery / jewelry suit wallet 
+clothes jumper sunglasses watch 
+coat kit sweater wear (v)
+costume (swimming) necklace swimming costume 
+dress pocket swimsuit 
+earring purse tie
+
+http://www.douyinpf.com/
+http://www.momohao.icu/Index.asp?page=3
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://jiema.top/kk/register.html
+
+https://t.me/news_firefox
+
+https://qiejiema.com/#/
