@@ -1,6 +1,6 @@
 /**
  * 日期：2023-08-06 12:15:05 仅支持Surge、Loon
- * 注意: Surge 必须使用带 有参数 [ability=http-client-policy] 走指定节点功能的substore否则脚本无效 
+ * 注意: Surge 必须使用带 有参数 [ability=http-client-policy] 走指定节点功能的substore否则脚本无效
  * 用法：Sub-Store 脚本操作里添加 此脚本链接 https://github.com/Keywos/rule/raw/main/pname.js#timeout=1000&bs=30
  * 作者：@Key
  * 功能：去除无效节点
@@ -20,7 +20,8 @@ let timeout = iar.timeout || 2000,
   Sort = iar.px,
   bs = iar.bs || 20;
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
-  target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;    
+  target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
+
 async function operator(e = [], targetPlatform, env) {
   let tzname = "", subcoll = "", x = false, xy = false;
   if (env?.source?.[e?.[0]?.subName]) x = true;
@@ -40,17 +41,23 @@ async function operator(e = [], targetPlatform, env) {
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {
-    $.notify("No Loon or Surge")
+    $.notify("No Loon or Surge");
     $.error(`No Loon or Surge`);
     return e;
   }
   if (e.length < 1) {
-    $notification.post("PNAME:"+subcoll+tzname, "订阅无节点", "");
+    $notification.post("PNAME:" + subcoll + tzname, "订阅无节点", "");
     return e;
   }
   function klog(...arg) {
-    console.log("[PNAME] "+subcoll+tzname+ " " + arg);
+    console.log("[PNAME] " + subcoll + tzname + " " + arg);
   }
+  function delog(...arg) {
+    if (debug) {
+      console.log("[PNAME] " + arg);
+    }
+  }
+
   const ein = e.length;
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
@@ -60,31 +67,55 @@ async function operator(e = [], targetPlatform, env) {
     await Promise.all(
       batch.map(async (pk) => {
         try {
-          const OUTK = await OUTIA(pk);
-          const qcip = pk.server + OUTK.ip;
-          flag && (pk.name = getflag(OUTK.loc) + " " + pk.name);
-          newnode.push(OUTK.ip)
-          pk.Key = OUTK;
-          pk.qc = qcip
+          const OUTK = await OUTIA(pk, target);
+          if (OUTK && OUTK.ip) {
+            const qcip = pk.server + OUTK.ip;
+            if (flag) {
+              pk.name = getflag(OUTK.loc) + " " + pk.name;
+            }
+            newnode.push(OUTK.ip);
+            pk.Key = OUTK;
+            pk.qc = qcip;
+          } else {
+            // 延迟检测失败，将节点标记为无效，后续会被移除
+            pk.invalid = true;
+            delog(`${pk.name} -> 延迟检测失败或超时`);
+          }
         } catch (err) {
-          delog(err.message)
+          delog(`${pk.name} -> 错误: ${err.message}`);
+          pk.invalid = true; // 发生错误也标记为无效
         }
       })
     );
     i += bs;
   }
-  e = removels(e);
+
+  e = e.filter(node => !node.invalid); // 移除无效节点
+  e = removels(e); // 移除重复节点 (根据 qc 属性)
+
   let eout = e.length;
-  if (eout > 2 && isSurge){
-    delog(newnode)
+  if (eout > 2 && isSurge) {
+    delog(newnode);
     const allsame = newnode.every((value, index, arr) => value === arr[0]);
-    if(allsame){
-        klog(`未使用带指定节点功能的 SubStore`);
-        $notification.post('PNAME：点击以安装对应版本'+subcoll+tzname,'未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",})
-        return e;
+    if (allsame) {
+      klog(`未使用带指定节点功能的 SubStore`);
+      $notification.post(
+        'PNAME：点击以安装对应版本' + subcoll + tzname,
+        '未使用带指定节点功能的 SubStore，或所有节点落地IP相同',
+        '',
+        {
+          url:
+            "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",
+        }
+      );
+      return e;
     }
   }
-  Sort && (e.sort((a, b) => a.Key.tk - b.Key.tk));
+
+  if (Sort) {
+    e.sort((a, b) => (a.Key?.tk || Infinity) - (b.Key?.tk || Infinity));
+  }
+
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   klog(`处理完后剩余: ${eout} 个`);
@@ -103,14 +134,12 @@ function sleep(e) {
   return new Promise((t) => setTimeout(t, e));
 }
 
-let apiRead = 0, apiw = 0;
-async function OUTIA(e) {
+async function OUTIA(e, targetPlatform) {
   const maxRE = 2;
-  //https://cloudflare.com/cdn-cgi/trace
   const url = `https://cloudflare.com/cdn-cgi/trace`;
   const getHttp = async (reTry) => {
     try {
-      let r = ProxyUtils.produce([e], target);
+      let r = ProxyUtils.produce([e], targetPlatform);
       let time = Date.now();
       const response = await Promise.race([
         $.http.get({ url: url, node: r, "policy-descriptor": r }),
@@ -119,7 +148,7 @@ async function OUTIA(e) {
         ),
       ]);
       const data = response.body;
-      if (data.length > 0) {
+      if (data && data.length > 0) {
         let endtime = Date.now() - time;
         let lines = data.split("\n");
         let key = lines.reduce((acc, line) => {
@@ -132,7 +161,7 @@ async function OUTIA(e) {
         }, {});
         return key;
       } else {
-        throw new Error(resdata.message);
+        throw new Error("Cloudflare trace 返回数据为空");
       }
     } catch (error) {
       if (reTry < maxRE) {
@@ -144,15 +173,12 @@ async function OUTIA(e) {
       }
     }
   };
-  const resGet = new Promise((resolve, reject) => {
-    getHttp(1)
-      .then((data) => {
-        apiw++;
-        resolve(data);
-      })
-      .catch(reject);
-  });
-  return resGet;
+  try {
+    return await getHttp(1);
+  } catch (error) {
+    delog(`${e.name} -> OUTIA 请求失败: ${error.message}`);
+    return null;
+  }
 }
 
 function getRandom() {
@@ -164,7 +190,6 @@ function delog(...arg) {
     console.log("[PNAME] " + arg);
   }
 }
-
 
 function removels(e) {
   const t = new Set();
